@@ -1,6 +1,7 @@
 package ng.com.bitsystems.recipeapp.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -9,17 +10,19 @@ public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String description;
     private String prepTime;
     private Integer cookTime;
     private Integer serving;
-
     private String source;
     private String url;
+
+    @Lob
     private String directions;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    private Set<Ingredient> ingredients;
+    private Set<Ingredient> ingredients = new HashSet<>();
 
     @Lob
     private byte[] image;
@@ -31,20 +34,10 @@ public class Recipe {
     private Notes notes;
 
     @ManyToMany
-    @JoinTable(
-            name = "recipe_category",
+    @JoinTable(name = "recipe_category",
             joinColumns = @JoinColumn(name = "recipe_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
-    )
-    private Set<Category> categories;
-
-    public Difficulty getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
-    }
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -126,6 +119,14 @@ public class Recipe {
         this.image = image;
     }
 
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
     public Notes getNotes() {
         return notes;
     }
@@ -134,11 +135,11 @@ public class Recipe {
         this.notes = notes;
     }
 
-    public Set<Category> getCategory() {
+    public Set<Category> getCategories() {
         return categories;
     }
 
-    public void setCategory(Set<Category> category) {
-        this.categories = category;
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }

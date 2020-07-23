@@ -1,7 +1,6 @@
 package ng.com.bitsystems.recipeapp.domain;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 public class Notes {
@@ -12,6 +11,9 @@ public class Notes {
 
     @Lob
     private String note;
+
+    @OneToOne
+    private Recipe recipe;
 
     public Long getId() {
         return id;
@@ -27,5 +29,13 @@ public class Notes {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 }

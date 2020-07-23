@@ -1,6 +1,7 @@
 package ng.com.bitsystems.recipeapp.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -9,10 +10,11 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String description;
 
     @ManyToMany(mappedBy = "categories")
-    private Set<Recipe> recipes;
+    private Set<Recipe> recipes = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -30,11 +32,11 @@ public class Category {
         this.description = description;
     }
 
-    public Set<Recipe> getRecipeSet() {
+    public Set<Recipe> getRecipes() {
         return recipes;
     }
 
-    public void setRecipeSet(Set<Recipe> recipeSet) {
-        this.recipes = recipeSet;
+    public void setRecipes(Set<Recipe> recipes) {
+        this.recipes = recipes;
     }
 }
